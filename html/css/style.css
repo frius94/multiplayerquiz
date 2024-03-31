@@ -1,0 +1,45 @@
+body, html {
+    height: 100%;
+}
+#page-content {
+    flex: 1 0 auto;
+}
+#lobby-section {
+    display: none;
+}
+#opponent-info {
+    display: none;
+}
+#quiz-section {
+    display: none;
+}
+#progress {
+    height: 20px;
+    margin-top: 15px;
+    border: 1px solid #007bff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+#progressBar {
+    width: 100%;
+}
+#summary-section {
+    display: none;
+}
+#join-game-section {
+    display: none;
+}
+#start-game {
+    margin-top: 20px;
+}
+#quit-game{
+    display: none;
+    width: 50%;
+}
+.footer {
+    position: sticky;
+    top: 100vh;
+    width: 100%;
+}
+span {
+    font-weight: bold;
+}

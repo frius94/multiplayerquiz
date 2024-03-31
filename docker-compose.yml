@@ -1,0 +1,50 @@
+version: '3.8'
+services:
+  quiz-app:
+    container_name: quiz-app
+    hostname: quiz-app
+    domainname: app.quiz.local
+    build:
+      context: .  # Path to your project's root directory
+      dockerfile: spring.Dockerfile  # Name of your Dockerfile
+    networks:
+      - quiz
+    ports:
+      - "8080:8080"  # Expose your application's port
+    depends_on:  # Optional: If you have a database dependency
+      - db
+    restart: always # Restart policy in case of failures
+
+  quiz-frontend:
+    container_name: quiz-frontend
+    hostname: quiz-frontend
+    domainname: frontend.quiz.local
+    build:
+      context: .
+      dockerfile: nginx.Dockerfile
+    ports:
+      - "80:80"
+    volumes:
+      - ./html:/usr/share/nginx/html
+      - ./data/nginx:/etc/nginx/conf.d
+    networks:
+      - quiz
+
+  db:  # Example database service (adjust if you're using a different database)
+    image: postgres:15 # Use a specific PostgreSQL version
+    container_name: db
+    hostname: db
+    domainname: db.quiz.local
+    volumes:
+      - quiz-data:/var/lib/postgresql/data # Persist database data
+    networks:
+      - quiz
+    environment:
+      POSTGRES_PASSWORD: 2851
+
+volumes:
+  quiz-data: # Named volume for database persistence
+
+networks:
+  quiz:
+    external: true

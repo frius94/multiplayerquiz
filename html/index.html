@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Multiplayer Quiz"/>
+    <title>Multiplayer Quiz</title>
+    <script src="js/app.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
+    <link rel="icon" type="image/x-icon" href="src/favicon.ico">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="d-flex flex-column h-100">
+<!-- navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <img src="src/logo.webp" alt="logo" width="30" height="30" class="d-inline-block align-text-top">
+            Multiplayer Quiz
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#" id="home">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" id="new-game-menu">New Game</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" id="join-game-menu">Join a game</a>
+                </li>
+            </ul>
+        </div>
+<!--        TEST-->
+<!--        <div>-->
+<!--            <div>-->
+<!--                <button id="sendMessage" onclick="sendMessage();">Send</button>-->
+<!--                <input type="text" id="text" placeholder="Text"/>-->
+<!--            </div>-->
+<!--            <br />-->
+<!--            <div>-->
+<!--                <button id="sendPrivateMessage" onclick="sendPrivateMessage();">Send Private</button>-->
+<!--                <input type="text" id="privateText" placeholder="Private Message"/>-->
+<!--                <input type="text" id="to" placeholder="To"/>-->
+<!--            </div>-->
+<!--            <br />-->
+<!--            <br />-->
+<!--            <br />-->
+
+<!--            <div id="messages" style="color: white"></div>-->
+
+<!--        </div>-->
+<!--        TEST-->
+    </div>
+</nav>
+<!-- content -->
+<div id="page-content" class="container mt-5">
+    <div class="row">
+        <div class="col text-center">
+            <h1 class="mb-4">Multiplayer Quiz</h1>
+            <!-- welcome section -->
+<!--            <div id="welcome-section" class="text-center my-5">-->
+<!--                <p>Welcome to the multiplayer quiz <span class="username"></span>.</p>-->
+<!--                <p id="share"></p>-->
+<!--                &lt;!&ndash; Button trigger modal &ndash;&gt;-->
+<!--                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">-->
+<!--                    New Game-->
+<!--                </button>-->
+<!--                <button id="new-game" class="btn btn-primary">New Game</button>-->
+<!--                <button id="join-game" class="btn btn-secondary">Join Game</button>-->
+<!--            </div>-->
+
+            <form class="mb-5" id="register">
+                <div class="mb-3">
+                    <label for="username" class="form-label">Username</label>
+                    <input type="text" class="form-control" id="username">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password">
+                </div>
+                <button type="submit" class="btn btn-primary" id="submit">Register</button>
+            </form>
+            <p class="d-none text-success" id="registerComplete">Register Complete</p>
+
+            <div>
+                <p style="display: inline">Points:</p>
+                <p style="display: inline" id="points">0</p>
+                <p id="correctOrWrong"></p>
+            </div>
+            <div>
+                <p id="question"></p>
+            </div>
+            <div>
+                <input type="button" id="option1" class="d-none"/>
+                <input type="button" id="option2" class="d-none"/>
+            </div>
+            <div>
+                <input type="button" id="option3" class="d-none"/>
+                <input type="button" id="option4" class="d-none"/>
+            </div>
+            <div>
+                <input type="button" id="getQuestion" class="btn btn-primary" value="New Game"/>
+            </div>
+
+            <!-- Modal -->
+<!--            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">-->
+<!--                <div class="modal-dialog">-->
+<!--                    <div class="modal-content">-->
+<!--                        <div class="modal-header">-->
+<!--                            <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>-->
+<!--                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
+<!--                        </div>-->
+<!--                        <div class="modal-body">-->
+<!--                            <label for="username">-->
+<!--                                <input type="text" name="username" id="username">-->
+<!--                            </label>-->
+<!--                        </div>-->
+<!--                        <div class="modal-footer">-->
+<!--                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>-->
+<!--                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="new-game">New Game</button>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+
+            <!-- lobby -->
+            <div id="lobby-section" class="text-center my-5">
+                <h3>Lobby</h3>
+                <div class="text-center my-5">
+                    <p id="lobby-text"></p>
+                    <div id="opponent" class="text-center my-5">
+                        <!-- Spinner -->
+                        <div id="waiting-spinner" class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Waiting...</span>
+                        </div>
+                        <!-- Opponent info -->
+                        <div id="opponent-info" class="text-center my-5">
+                            <p id="opponent-name" class="me-3">Opponent: <span class="opponent">$opponent</span></p>
+                            <p id="opponent-status"></p>
+                        </div>
+                    </div>
+                </div>
+                <p>Good luck <span class="username">$username</span>!</p>
+                <button id="start-game" class="btn btn-primary">Start game</button>
+            </div>
+            <!-- join game -->
+            <div id="join-game-section" class="text-center my-5">
+                <h3>Join a Game</h3>
+                <div class="input-group mb-3 justify-content-center">
+                        <span class="input-group-text">Game ID:</span>
+                        <input type="text" class="form-control" id="gameId" maxlength="6" pattern="[A-Za-z0-9]{6}" title="Game ID must be 6 alphanumeric characters." placeholder="A47U8E" required>
+                        <button id="join-game-submit" class="btn btn-primary">Join</button>
+                </div>
+            </div>
+            <!-- active game -->
+            <div id="quiz-section" class="text-center my-5">
+                <!-- question -->
+<!--                <div id="question" class="mb-3">-->
+<!--                    <p id="gameResult"></p>-->
+<!--                </div>-->
+                <!-- answers -->
+                <div id="answers">
+                </div>
+                <!-- progress bar -->
+                <div id="progress">
+                    <div id="progressBar" class="progress-bar progress-bar-striped progress-bar-animated bg-success h-100" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <!-- sumary -->
+                <div id="summary-section">
+                </div>
+                <button id="quit-game" class="btn btn-warning mt-3 d-block mx-auto" style="">Quit</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- modal -->
+<div class="modal fade" id="newModal" tabindex="-1" aria-labelledby="newModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Nein</button>
+                <button type="button" class="btn btn-primary" id="confirmModal">Ja</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- footer -->
+<footer id="sticky-footer" class="footer bg-dark text-white-50 py-3 mt-auto">
+    <div class="container text-center">
+        <small>Copyright © 2023 by Group A. All Rights Reserved.</small>
+    </div>
+</footer>
+</body>
+</html>
