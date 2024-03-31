@@ -30,13 +30,6 @@ stompClient.connect({}, function(frame) {
         handleResult(messageBody);
     });
 
-    stompClient.subscribe('/specific', function(result) {
-        console.log("Message received on /user/specific:", result);  // Log the complete message
-        const messageBody = JSON.parse(result.body);
-        console.log("Parsed Message:", messageBody); // Log the parsed content
-        handleResult(messageBody);
-    });
-
     stompClient.subscribe('/all/readyForNextQuestion', function(result) {
         document.getElementById("getQuestion").disabled = false
     });
