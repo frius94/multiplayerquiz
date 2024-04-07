@@ -1,24 +1,19 @@
 package com.semesterarbeit.quizgemini.configuration;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.AnonymousAuthenticationFilter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,30 +46,30 @@ public class MessageConverterConfig implements WebMvcConfigurer {
                 .allowedOrigins("*"); // Restrict to your frontend's origin
     }
 
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        return http
-                .authorizeHttpRequests(request -> request.requestMatchers(new AntPathRequestMatcher("/test/**"))
-                        .authenticated())
-                .httpBasic(Customizer.withDefaults())
-                .authorizeHttpRequests(request -> request.requestMatchers(new AntPathRequestMatcher("/**"))
-                        .permitAll())
-                .authorizeHttpRequests(request -> request.requestMatchers(new AntPathRequestMatcher("/api/register"))
-                        .anonymous())
-                .csrf(AbstractHttpConfigurer::disable)
-                .build();
-    }
-
 //    @Bean
 //    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-//        http
-//                .authorizeHttpRequests(authorize -> authorize
-//                        .anyRequest().anonymous()
-//                )
+//        return http
+//                .authorizeHttpRequests(request -> request.requestMatchers(new AntPathRequestMatcher("/test/**"))
+//                        .authenticated())
+//                .httpBasic(Customizer.withDefaults())
+//                .authorizeHttpRequests(request -> request.requestMatchers(new AntPathRequestMatcher("/**"))
+//                        .permitAll())
+//                .authorizeHttpRequests(request -> request.requestMatchers(new AntPathRequestMatcher("/api/register"))
+//                        .anonymous())
 //                .csrf(AbstractHttpConfigurer::disable)
-//                .httpBasic(withDefaults());
-//        return http.build();
+//                .build();
 //    }
+
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http
+                .authorizeHttpRequests(authorize -> authorize
+                        .anyRequest().anonymous()
+                )
+                .csrf(AbstractHttpConfigurer::disable)
+                .httpBasic(withDefaults());
+        return http.build();
+    }
 
     @Bean
     public InMemoryUserDetailsManager userDetailsService() {

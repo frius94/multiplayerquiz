@@ -1,7 +1,6 @@
 package com.semesterarbeit.quizgemini.configuration;
 
 import com.semesterarbeit.quizgemini.controller.QuizGameController;
-import com.semesterarbeit.quizgemini.handler.QuizSocketHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -35,12 +34,12 @@ public class WebConfig implements WebSocketMessageBrokerConfigurer {
         return new QuizGameController(messagingTemplate);
     }
 
-    @Bean
-    public QuizSocketHandler quizSocketHandler(QuizGameController quizGameController) {
-        return new QuizSocketHandler(quizGameController);
+//    @Bean
+//    public QuizSocketHandler quizSocketHandler(QuizGameController quizGameController) {
+//        return new QuizSocketHandler(quizGameController);
     }
 
     // ... Your other beans, if any: quizGame, quizSocketHandler ...
-}
+//}
 
 

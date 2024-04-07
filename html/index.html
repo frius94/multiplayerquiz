@@ -62,37 +62,50 @@
 </nav>
 <!-- content -->
 <div id="page-content" class="container mt-5">
-    <div class="row">
-        <div class="col text-center">
+    <div class="row text-center">
             <h1 class="mb-4">Multiplayer Quiz</h1>
-            <!-- welcome section -->
-<!--            <div id="welcome-section" class="text-center my-5">-->
-<!--                <p>Welcome to the multiplayer quiz <span class="username"></span>.</p>-->
-<!--                <p id="share"></p>-->
-<!--                &lt;!&ndash; Button trigger modal &ndash;&gt;-->
-<!--                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">-->
-<!--                    New Game-->
-<!--                </button>-->
-<!--                <button id="new-game" class="btn btn-primary">New Game</button>-->
-<!--                <button id="join-game" class="btn btn-secondary">Join Game</button>-->
-<!--            </div>-->
 
+            <div class="col-3 d-none" id="scoreboardParent">
+                <span>Scoreboard</span>
+                <table class="table table-bordered table-dark" id="scoreboard">
+                    <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Points</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col-3 ms-auto d-none" id="activePlayersParent">
+                <span>Active Players</span>
+                <table class="table table-bordered table-dark" id="activePlayers">
+                    <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                    </tr>
+                    </thead>
+                    <tbody id="activePlayersBody">
+                    </tbody>
+                </table>
+            </div>
+    </div>
+
+    <div class="row text-center">
+        <div class="col-6 mx-auto">
             <form class="mb-5" id="register">
                 <div class="mb-3">
                     <label for="username" class="form-label">Username</label>
                     <input type="text" class="form-control" id="username">
-                    <label for="password" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="password">
+<!--                    <label for="password" class="form-label">Password</label>-->
+<!--                    <input type="password" class="form-control" id="password">-->
                 </div>
                 <button type="submit" class="btn btn-primary" id="submit">Register</button>
             </form>
             <p class="d-none text-success" id="registerComplete">Register Complete</p>
-
-            <div>
-                <p style="display: inline">Points:</p>
-                <p style="display: inline" id="points">0</p>
-                <p id="correctOrWrong"></p>
-            </div>
+            <p class="d-none" id="correctOrWrong"></p>
             <div>
                 <p id="question"></p>
             </div>
@@ -105,76 +118,7 @@
                 <input type="button" id="option4" class="d-none"/>
             </div>
             <div>
-                <input type="button" id="getQuestion" class="btn btn-primary" value="New Game"/>
-            </div>
-
-            <!-- Modal -->
-<!--            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">-->
-<!--                <div class="modal-dialog">-->
-<!--                    <div class="modal-content">-->
-<!--                        <div class="modal-header">-->
-<!--                            <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>-->
-<!--                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
-<!--                        </div>-->
-<!--                        <div class="modal-body">-->
-<!--                            <label for="username">-->
-<!--                                <input type="text" name="username" id="username">-->
-<!--                            </label>-->
-<!--                        </div>-->
-<!--                        <div class="modal-footer">-->
-<!--                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>-->
-<!--                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="new-game">New Game</button>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-
-            <!-- lobby -->
-            <div id="lobby-section" class="text-center my-5">
-                <h3>Lobby</h3>
-                <div class="text-center my-5">
-                    <p id="lobby-text"></p>
-                    <div id="opponent" class="text-center my-5">
-                        <!-- Spinner -->
-                        <div id="waiting-spinner" class="spinner-border text-primary" role="status">
-                            <span class="visually-hidden">Waiting...</span>
-                        </div>
-                        <!-- Opponent info -->
-                        <div id="opponent-info" class="text-center my-5">
-                            <p id="opponent-name" class="me-3">Opponent: <span class="opponent">$opponent</span></p>
-                            <p id="opponent-status"></p>
-                        </div>
-                    </div>
-                </div>
-                <p>Good luck <span class="username">$username</span>!</p>
-                <button id="start-game" class="btn btn-primary">Start game</button>
-            </div>
-            <!-- join game -->
-            <div id="join-game-section" class="text-center my-5">
-                <h3>Join a Game</h3>
-                <div class="input-group mb-3 justify-content-center">
-                        <span class="input-group-text">Game ID:</span>
-                        <input type="text" class="form-control" id="gameId" maxlength="6" pattern="[A-Za-z0-9]{6}" title="Game ID must be 6 alphanumeric characters." placeholder="A47U8E" required>
-                        <button id="join-game-submit" class="btn btn-primary">Join</button>
-                </div>
-            </div>
-            <!-- active game -->
-            <div id="quiz-section" class="text-center my-5">
-                <!-- question -->
-<!--                <div id="question" class="mb-3">-->
-<!--                    <p id="gameResult"></p>-->
-<!--                </div>-->
-                <!-- answers -->
-                <div id="answers">
-                </div>
-                <!-- progress bar -->
-                <div id="progress">
-                    <div id="progressBar" class="progress-bar progress-bar-striped progress-bar-animated bg-success h-100" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <!-- sumary -->
-                <div id="summary-section">
-                </div>
-                <button id="quit-game" class="btn btn-warning mt-3 d-block mx-auto" style="">Quit</button>
+                <input type="button" id="getQuestion" class="btn btn-primary d-none" value="New Game"/>
             </div>
         </div>
     </div>

@@ -35,6 +35,9 @@ public class RegistrationController {
     @Autowired
     InMemoryUserDetailsManager inMemoryUserDetailsManager;
 
+    @Autowired
+    MessageController messageController;
+
     private static final Logger logger = LoggerFactory.getLogger(RegistrationController.class);
 
 
@@ -44,11 +47,17 @@ public class RegistrationController {
         logger.error(jsonUserAndPassword);
         JSONObject userJson = new JSONObject(jsonUserAndPassword);
         String username = userJson.getString("username");
-        String password = userJson.getString("password");
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority("USER"));
-        User user = new User(username, password, true, true, true, true, authorities);
-        inMemoryUserDetailsManager.createUser(user);
-        sessionRegistry.registerNewSession(request.getSession().getId(), user);
+//        String password = userJson.getString("password");
+        logger.error("username in register" + username);
+        if (!MessageController.allUsers.contains(username)) {
+            MessageController.allUsers.add(username);
+        }
+
+//        List<GrantedAuthority> authorities = new ArrayList<>();
+//        authorities.add(new SimpleGrantedAuthority("USER"));
+//        User user = new User(username, password, true, true, true, true, authorities);
+//        inMemoryUserDetailsManager.createUser(user);
+//        sessionRegistry.registerNewSession(request.getSession().getId(), user);
+        messageController.activePlayers();
     }
 }
