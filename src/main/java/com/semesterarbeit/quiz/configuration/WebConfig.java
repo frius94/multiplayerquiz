@@ -1,9 +1,6 @@
-package com.semesterarbeit.quizgemini.configuration;
+package com.semesterarbeit.quiz.configuration;
 
-import com.semesterarbeit.quizgemini.controller.QuizGameController;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
@@ -28,18 +25,4 @@ public class WebConfig implements WebSocketMessageBrokerConfigurer {
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/quiz-websocket").setAllowedOriginPatterns("*").withSockJS();
     }
-
-    @Bean
-    public QuizGameController quizGame(SimpMessagingTemplate messagingTemplate) {
-        return new QuizGameController(messagingTemplate);
-    }
-
-//    @Bean
-//    public QuizSocketHandler quizSocketHandler(QuizGameController quizGameController) {
-//        return new QuizSocketHandler(quizGameController);
-    }
-
-    // ... Your other beans, if any: quizGame, quizSocketHandler ...
-//}
-
-
+}

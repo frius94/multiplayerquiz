@@ -1,4 +1,4 @@
-package com.semesterarbeit.quizgemini.configuration;
+package com.semesterarbeit.quiz.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,34 +31,11 @@ public class MessageConverterConfig implements WebMvcConfigurer {
         return new SessionRegistryImpl();
     }
 
-//    public void addUser(String username, String password) {
-//        UserDetails user = User.withDefaultPasswordEncoder()
-//                .username(username)
-//                .password(password)
-//                .roles("USER")
-//                .build();
-//        inMemoryUserDetailsManager.createUser(user);
-//    }
-
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**") // Allow requests from all paths
-                .allowedOrigins("*"); // Restrict to your frontend's origin
+        registry.addMapping("/**")
+                .allowedOrigins("*");
     }
-
-//    @Bean
-//    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-//        return http
-//                .authorizeHttpRequests(request -> request.requestMatchers(new AntPathRequestMatcher("/test/**"))
-//                        .authenticated())
-//                .httpBasic(Customizer.withDefaults())
-//                .authorizeHttpRequests(request -> request.requestMatchers(new AntPathRequestMatcher("/**"))
-//                        .permitAll())
-//                .authorizeHttpRequests(request -> request.requestMatchers(new AntPathRequestMatcher("/api/register"))
-//                        .anonymous())
-//                .csrf(AbstractHttpConfigurer::disable)
-//                .build();
-//    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {

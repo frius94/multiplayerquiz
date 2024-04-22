@@ -1,10 +1,10 @@
-package com.semesterarbeit.quizgemini;
+package com.semesterarbeit.quiz;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class QuizGeminiApplicationTests {
+class QuizApplicationTests {
 
     @Test
     void contextLoads() {

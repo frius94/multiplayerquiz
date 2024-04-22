@@ -1,6 +1,6 @@
-package com.semesterarbeit.quizgemini.repositories;
+package com.semesterarbeit.quiz.repositories;
 
-import com.semesterarbeit.quizgemini.models.Question;
+import com.semesterarbeit.quiz.models.Question;
 import jakarta.annotation.Nullable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

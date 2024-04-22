@@ -40,7 +40,7 @@ tasks.withType<Test> {
 
 tasks.jar {
     manifest {
-        attributes("Main-Class" to "com.semesterarbeit.quizgemini.QuizGeminiApplication")
+        attributes("Main-Class" to "com.semesterarbeit.quiz.QuizApplication")
     }
 }
 

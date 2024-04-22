@@ -1,4 +1,4 @@
-package com.semesterarbeit.quizgemini.models;
+package com.semesterarbeit.quiz.models;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

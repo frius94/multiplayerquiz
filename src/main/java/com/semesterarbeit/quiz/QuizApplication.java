@@ -1,13 +1,13 @@
-package com.semesterarbeit.quizgemini;
+package com.semesterarbeit.quiz;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class QuizGeminiApplication {
+public class QuizApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(QuizGeminiApplication.class, args);
+        SpringApplication.run(QuizApplication.class, args);
     }
 
 }

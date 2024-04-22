@@ -3,9 +3,6 @@ var stompClient = null;
 var socket = new SockJS('http://localhost:8080/quiz-websocket');
 stompClient = Stomp.over(socket);
 stompClient.connect({}, function(frame) {
-    stompClient.subscribe('/all/messages', function(result) {
-        show(JSON.parse(result.body));
-    });
 
     stompClient.subscribe('/all/question', function(result) {
         showQuestion(JSON.parse(result.body));
@@ -24,13 +21,6 @@ stompClient.connect({}, function(frame) {
         document.getElementById("registerComplete").classList.add("d-none");
         document.getElementById("getQuestion").value = "Next question"
     });
-
-    // stompClient.subscribe('/user/specific', function(result) {
-    //     console.log("Message received on /user/specific:", result);  // Log the complete message
-    //     const messageBody = JSON.parse(result.body);
-    //     console.log("Parsed Message:", messageBody); // Log the parsed content
-    //     showCorrectOrWrong(messageBody);
-    // });
 
     stompClient.subscribe('/all/readyForNextQuestion', function(result) {
         document.getElementById("getQuestion").disabled = false
@@ -84,37 +74,13 @@ stompClient.connect({}, function(frame) {
 
         sessionStorage.setItem("scoreboard", JSON.stringify(updatedScoreboard))
         updateScoreboardHtml(updatedScoreboard, player)
-
-        // let filteredPlayers = players.filter(player => player.name === username);
-        //
-        // if (typeof filteredPlayers !== 'undefined' && filteredPlayers.length > 0) {
-        //     if (filteredPlayers.result) {
-        //         let updatedScoreboard = scoreboard.map((scoreboardPlayer) =>  {
-        //             if (scoreboardPlayer.username === username && scoreboardPlayer.response) {
-        //                 scoreboardPlayer.points++
-        //             }
-        //             return scoreboardPlayer
-        //         });
-        //
-        //         sessionStorage.setItem("scoreboard", updatedScoreboard)
-        //         updateScoreboardHtml(updatedScoreboard)
-        //         // let test = [
-        //         //     {username: "umut", response: true},
-        //         //     {username: "florian", response: false}
-        //         // ]
-        //     }
-        // }
     });
 });
 
 function updateScoreboardHtml(updatedScoreboard, player) {
     let scoreBoard = document.getElementById("scoreboard");
-    let trRows = scoreBoard.getElementsByTagName("tr");
-    // let tdRows = Array.from(scoreBoard.getElementsByTagName("td"));
-    // let tBody = scoreBoard.children[1]
 
     let users = Array.from(document.querySelectorAll("[data-name]")).map(user => user.innerHTML);
-    // let points = Array.from(document.querySelectorAll("[data-points]")).map(point => point.innerHTML);
 
     // create not existing user in scoreboard
     updatedScoreboard.forEach(scoreBoardPlayer => {
@@ -135,20 +101,12 @@ function updateScoreboardHtml(updatedScoreboard, player) {
     });
 
     // update points of user
-    console.log(player)
     let points = parseInt(updatedScoreboard.filter(scoreboardPlayer => scoreboardPlayer.username === player.username)[0].points);
-    // let points = parseInt(document.querySelectorAll("td[data-points='" + player.username + "']")[0].innerHTML);
     document.querySelectorAll("td[data-points='" + player.username + "']")[0].innerHTML = points.toString()
 }
 
 function getQuestion() {
     stompClient.send("/app/question", {});
-}
-
-function sendMessage() {
-    var text = document.getElementById('text').value;
-    stompClient.send("/app/application", {},
-        JSON.stringify({'text':text}));
 }
 
 function submitOption(question, option) {
