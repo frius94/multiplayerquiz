@@ -1,6 +1,5 @@
 package com.semesterarbeit.quiz.controller;
 
-import com.semesterarbeit.quiz.configuration.MessageConverterConfig;
 import com.semesterarbeit.quiz.models.Question;
 import com.semesterarbeit.quiz.repositories.QuestionRepository;
 import org.json.JSONArray;
@@ -12,8 +11,6 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.user.SimpUserRegistry;
-import org.springframework.security.core.session.SessionRegistry;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.stereotype.Controller;
 
 import java.util.ArrayList;
@@ -28,16 +25,6 @@ public class QuizGameController {
 
     @Autowired
     QuestionRepository questionRepository;
-
-    @Autowired
-    MessageConverterConfig messageConverterConfig;
-
-
-    @Autowired
-    InMemoryUserDetailsManager inMemoryUserDetailsManager;
-
-    @Autowired
-    SessionRegistry sessionRegistry;
 
     @Autowired
     SimpUserRegistry simpUserRegistry;
